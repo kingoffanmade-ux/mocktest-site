@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SSC CGL One Word Substitution Mock Test</title>
+<style>
+  :root {
+    --bg: #f5f7fb;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --line: #dbe4f0;
+    --blue: #2563eb;
+    --blue-50: #eff6ff;
+    --green: #16a34a;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 180px, var(--bg) 100%);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(219,228,240,0.9);
+  }
+  .topbar-inner {
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .brand h1 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.1;
+  }
+  .brand .sub {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  .pill {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 14px;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.05);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .pill strong { color: var(--blue); }
+  .pill.timer { color: #b91c1c; }
+  .layout {
+    max-width: 1450px;
+    margin: 18px auto 30px;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 18px;
+    align-items: start;
+  }
+  .panel {
+    background: var(--card);
+    border: 1px solid rgba(219,228,240,0.92);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .main {
+    padding: 22px;
+  }
+  .qhead {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .qhead .qno {
+    color: var(--blue);
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    font-size: 15px;
+  }
+  .qhead .mark {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .question {
+    font-size: 28px;
+    line-height: 1.35;
+    margin: 10px 0 18px;
+    font-weight: 800;
+  }
+  .options {
+    display: grid;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .option {
+    border: 1.5px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: 0.16s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+  }
+  .option:hover {
+    transform: translateY(-1px);
+    border-color: #b8c8e6;
+    box-shadow: 0 8px 18px rgba(15,23,42,0.05);
+  }
+  .option input { transform: scale(1.15); }
+  .option .text {
+    font-size: 18px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .option.selected {
+    border-color: var(--blue);
+    background: var(--blue-50);
+  }
+  .footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  button {
+    border: 0;
+    border-radius: 14px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+  }
+  .btn-secondary {
+    background: #eef2ff;
+    color: #1d4ed8;
+  }
+  .btn-ghost {
+    background: #f3f4f6;
+    color: #111827;
+  }
+  .sidebar {
+    padding: 16px;
+    position: sticky;
+    top: 86px;
+  }
+  .sidebar h2 {
+    margin: 0 0 10px;
+    font-size: 16px;
+  }
+  .legend {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    display: inline-block;
+  }
+  .dot.unanswered { background: #e5e7eb; }
+  .dot.answered { background: var(--blue); }
+  .dot.marked { background: var(--amber); }
+  .dot.current { background: #7c3aed; }
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    max-height: calc(100vh - 260px);
+    overflow: auto;
+    padding-right: 4px;
+  }
+  .pbtn {
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 0;
+    font-weight: 800;
+    cursor: pointer;
+    min-height: 42px;
+    transition: 0.15s ease;
+  }
+  .pbtn:hover { border-color: #93c5fd; }
+  .pbtn.current {
+    background: #ede9fe;
+    border-color: #a78bfa;
+    color: #6d28d9;
+  }
+  .pbtn.answered {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+  }
+  .pbtn.marked {
+    background: #fffbeb;
+    border-color: #fbbf24;
+    color: #a16207;
+  }
+  .pbtn.correct {
+    background: #ecfdf5;
+    border-color: #86efac;
+    color: #15803d;
+  }
+  .pbtn.wrong {
+    background: #fef2f2;
+    border-color: #fca5a5;
+    color: #b91c1c;
+  }
+  .review {
+    margin-top: 18px;
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+  }
+  .review-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-top: 12px;
+  }
+  .review-card.correct {
+    border-left: 5px solid var(--green);
+  }
+  .review-card.wrong {
+    border-left: 5px solid var(--red);
+  }
+  .review-card.unanswered {
+    border-left: 5px solid #9ca3af;
+  }
+  .review-card .meta {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .review-card .q {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .review-card .a {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .result-box {
+    display: none;
+  }
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .score-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 8px 20px rgba(15,23,42,0.04);
+  }
+  .score-card .label {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .score-card .value {
+    font-size: 28px;
+    font-weight: 900;
+  }
+  .review-toggle {
+    margin-top: 10px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    color: var(--blue);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .small {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  @media (max-width: 1100px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .score-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 700px) {
+    .topbar-inner { flex-direction: column; align-items: flex-start; }
+    .stats { justify-content: flex-start; }
+    .main { padding: 16px; }
+    .question { font-size: 22px; }
+    .option .text { font-size: 16px; }
+    .palette { grid-template-columns: repeat(6, 1fr); }
+    .score-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <h1>SSC CGL One Word Substitution Mock Test</h1>
+        <div class="sub">137 questions · +1 correct · -0.5 wrong · 20 minutes · correct answers shown after submission</div>
+      </div>
+      <div class="stats">
+        <div class="pill"><strong id="progress">QUESTION 1 / 137</strong></div>
+        <div class="pill timer">TIME LEFT: <strong id="timer">20:00</strong></div>
+        <div class="pill">Answered: <strong id="answeredCount">0</strong></div>
+        <div class="pill">Marked: <strong id="markedCount">0</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="panel main">
+      <div id="quizView">
+        <div class="qhead">
+          <div class="qno" id="qnoLabel">QUESTION 1 / 137</div>
+          <div class="mark">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="markReview" />
+              Mark for review
+            </label>
+          </div>
+        </div>
+        <div class="question" id="questionText"></div>
+        <div class="options" id="options"></div>
+
+        <div class="footer-actions">
+          <div class="buttons">
+            <button class="btn-ghost" id="prevBtn" type="button">Previous</button>
+            <button class="btn-secondary" id="clearBtn" type="button">Clear Response</button>
+            <button class="btn-ghost" id="nextBtn" type="button">Save & Next</button>
+          </div>
+          <div class="buttons">
+            <button class="btn-primary" id="submitBtn" type="button">Submit Test</button>
+          </div>
+        </div>
+        <div class="small" style="margin-top:10px;">
+          Tip: use the question palette on the right to jump around like a real exam.
+        </div>
+      </div>
+
+      <div class="result-box" id="resultView">
+        <h2 style="margin:0 0 8px; font-size:28px;">Test Submitted</h2>
+        <div class="small">Here are your scores and answer review.</div>
+        <div class="score-grid">
+          <div class="score-card"><div class="label">Score</div><div class="value" id="scoreVal">0</div></div>
+          <div class="score-card"><div class="label">Correct</div><div class="value" id="correctVal">0</div></div>
+          <div class="score-card"><div class="label">Wrong</div><div class="value" id="wrongVal">0</div></div>
+          <div class="score-card"><div class="label">Unanswered</div><div class="value" id="unansweredVal">0</div></div>
+        </div>
+        <div class="small" id="accuracyText"></div>
+        <div class="review-toggle" id="toggleReview">Show / hide answer review</div>
+        <div class="review" id="reviewArea"></div>
+      </div>
+    </div>
+
+    <div class="panel sidebar">
+      <h2>Question Palette</h2>
+      <div class="legend">
+        <div class="legend-row"><span class="dot current"></span> Current</div>
+        <div class="legend-row"><span class="dot answered"></span> Answered</div>
+        <div class="legend-row"><span class="dot marked"></span> Marked for review</div>
+        <div class="legend-row"><span class="dot unanswered"></span> Unanswered</div>
+      </div>
+      <div class="palette" id="palette"></div>
+    </div>
+  </div>
+
+<script>
+const questions = [{"num": 1, "prompt": "A Place Where Animals Are Slaughtered.", "options": ["Abattoir", "Animosity", "Aerial", "Abstruse"], "answerIndex": 0, "answer": "Abattoir"}, {"num": 2, "prompt": "To give up throne voluntarily", "options": ["Addendum", "Artiste", "Abdicate", "Aerating"], "answerIndex": 2, "answer": "Abdicate"}, {"num": 3, "prompt": "Ritual Washing of The Body.", "options": ["Amphibian", "Ablution", "Autobiography", "Ambassador"], "answerIndex": 1, "answer": "Ablution"}, {"num": 4, "prompt": "The Original Inhabitants Of A Place", "options": ["Amnesia", "Aborigines", "Arsonist", "Archaeology"], "answerIndex": 1, "answer": "Aborigines"}, {"num": 5, "prompt": "To shorten", "options": ["Annihilate", "Abridge", "Artiste", "Antibiotics"], "answerIndex": 1, "answer": "Abridge"}, {"num": 6, "prompt": "To regard with disgust and hatred", "options": ["Abhor", "Apostle", "Adonis", "Aerating"], "answerIndex": 0, "answer": "Abhor"}, {"num": 7, "prompt": "Wildly unreasonable, illogical or ridiculous", "options": ["Arsonphobia", "Absurd", "Accomplice", "Anachronism"], "answerIndex": 1, "answer": "Absurd"}, {"num": 8, "prompt": "Hard To Understand.", "options": ["Apiary", "Alumnus", "Abstruse", "Antidote"], "answerIndex": 2, "answer": "Abstruse"}, {"num": 9, "prompt": "A Man Who Is The Head Of A Monastery Or An Abbey.", "options": ["Abbot", "Amphibian", "Adolescence", "Antagonist"], "answerIndex": 0, "answer": "Abbot"}, {"num": 10, "prompt": "A Shortened Form Of A Word Or Phrase", "options": ["Abbreviation", "Arsenal", "Applaud", "Altitude"], "answerIndex": 0, "answer": "Abbreviation"}, {"num": 11, "prompt": "Relating To Sound", "options": ["Altruism", "Acoustics", "Anglophile", "Ad hoc"], "answerIndex": 1, "answer": "Acoustics"}, {"num": 12, "prompt": "Give More Force Or Importance To", "options": ["Anglophobe", "Accentuate", "Apostle", "Amnesia"], "answerIndex": 1, "answer": "Accentuate"}, {"num": 13, "prompt": "Helper In A Wrong Deed Or Crime.", "options": ["Annular", "Accomplice", "Abbot", "Arbitrary"], "answerIndex": 1, "answer": "Accomplice"}, {"num": 14, "prompt": "Word Formed From Initial Letters Of A Name.", "options": ["Annular", "Ambiguous", "Autocracy", "Acronym"], "answerIndex": 3, "answer": "Acronym"}, {"num": 15, "prompt": "One who performs daring gymnastic feats", "options": ["Aggressive", "Acrobat", "Agenda", "Anachronism"], "answerIndex": 1, "answer": "Acrobat"}, {"num": 16, "prompt": "Fear of heights", "options": ["Apiary", "Acrophobia", "Arboreal", "Arbitrary"], "answerIndex": 1, "answer": "Acrophobia"}, {"num": 17, "prompt": "To play the part of and function as, some other person", "options": ["Act", "Adonis", "Aerial", "Accomplice"], "answerIndex": 0, "answer": "Act"}, {"num": 18, "prompt": "To free a person by a verdict of ‘not guilty’", "options": ["Artiste", "Act", "Apostate", "Acquit"], "answerIndex": 3, "answer": "Acquit"}, {"num": 19, "prompt": "To treat with cruelty or violence", "options": ["Abuse", "Anaesthetic", "Ablution", "Aviary"], "answerIndex": 0, "answer": "Abuse"}, {"num": 20, "prompt": "For The Purpose", "options": ["Antidote", "Aerial", "Antibiotics", "Ad hoc"], "answerIndex": 3, "answer": "Ad hoc"}, {"num": 21, "prompt": "One who has become dependent on something or drugs", "options": ["Addict", "Abattoir", "Audience", "Anachronism"], "answerIndex": 0, "answer": "Addict"}, {"num": 22, "prompt": "A Stage between childhood And adulthood.", "options": ["Alluvial", "Anatomy", "Adolescence", "Autobiography"], "answerIndex": 2, "answer": "Adolescence"}, {"num": 23, "prompt": "Excessive Devotion to someone", "options": ["Abattoir", "Annotation", "Aviary", "Adulation"], "answerIndex": 3, "answer": "Adulation"}, {"num": 24, "prompt": "Things To Be Added At The End Of A Book, Etc.", "options": ["Annuity", "Analgesia", "Addendum", "Apiary"], "answerIndex": 2, "answer": "Addendum"}, {"num": 25, "prompt": "A handsome man", "options": ["Acquit", "Adonis", "Adolescence", "Astronomy"], "answerIndex": 1, "answer": "Adonis"}, {"num": 26, "prompt": "A Public Notice Offering Or Asking For Goods, Services, Etc.", "options": ["Anachronism", "Aviary", "Altruist", "Advertisement"], "answerIndex": 3, "answer": "Advertisement"}, {"num": 27, "prompt": "A person who supports or speaks in favour of something", "options": ["Annul", "Arbitrary", "Appraisal", "Advocate"], "answerIndex": 3, "answer": "Advocate"}, {"num": 28, "prompt": "The process by which air is circulated through, mixed with or dissolved in a liquid or substance", "options": ["Amnesty", "Aerating", "Anarchy", "Aesthetic"], "answerIndex": 1, "answer": "Aerating"}, {"num": 29, "prompt": "A Person With A High Sense Of Beauty.", "options": ["Amnesia", "Aesthete", "Abdicate", "Amoral"], "answerIndex": 1, "answer": "Aesthete"}, {"num": 30, "prompt": "Living In Air", "options": ["Acquit", "Aerial", "Amoral", "Abbot"], "answerIndex": 1, "answer": "Aerial"}, {"num": 31, "prompt": "Science dealing with design, construction and operation of aircraft", "options": ["Annihilate", "Aeronautics", "Ambiguous", "Astronomy"], "answerIndex": 1, "answer": "Aeronautics"}, {"num": 32, "prompt": "The branch of philosophy concerned with the study of principles of beauty, especially in art", "options": ["Aesthetic", "Arbitrator", "Anarchist", "Assertive"], "answerIndex": 0, "answer": "Aesthetic"}, {"num": 33, "prompt": "A written statement confirmed by oath or affirmation", "options": ["Artiste", "Arboriculture", "Apathy", "Affidavit"], "answerIndex": 3, "answer": "Affidavit"}, {"num": 34, "prompt": "Having Natural Attention To", "options": ["Acrophobia", "Affinity", "Advertisement", "Armistice"], "answerIndex": 1, "answer": "Affinity"}, {"num": 35, "prompt": "Wealthy; Having An Abundance Of Money.", "options": ["Archaeology", "Alumnus", "Affluent", "Alienation"], "answerIndex": 2, "answer": "Affluent"}, {"num": 36, "prompt": "The Act Of Forestation By Planting Many Trees.", "options": ["Anarchy", "Afforestation", "Articulate", "Annihilate"], "answerIndex": 1, "answer": "Afforestation"}, {"num": 37, "prompt": "Items Of Business For Consideration At A Meeting", "options": ["Addendum", "Agenda", "Accomplice", "Aborigines"], "answerIndex": 1, "answer": "Agenda"}, {"num": 38, "prompt": "Always ready to attack or Quarrel", "options": ["Astrology", "Ambiguous", "Astronomy", "Aggressive"], "answerIndex": 3, "answer": "Aggressive"}, {"num": 39, "prompt": "Someone Who Attacks First.", "options": ["Apostle", "Aggressor", "Abattoir", "Aquatic"], "answerIndex": 1, "answer": "Aggressor"}, {"num": 40, "prompt": "Doubtful About The Existence Of God.", "options": ["Agoraphobia", "Artiste", "Agnosticism", "Astronomy"], "answerIndex": 2, "answer": "Agnosticism"}, {"num": 41, "prompt": "Unreasonable Fear Of Open Spaces.", "options": ["Annular", "Acrophobia", "Agoraphobia", "Acrobat"], "answerIndex": 2, "answer": "Agoraphobia"}, {"num": 42, "prompt": "To Lessen, Make Less Severe.", "options": ["Aviary", "Alleviate", "Agoraphobia", "Audience"], "answerIndex": 1, "answer": "Alleviate"}, {"num": 43, "prompt": "The height of object above sea level", "options": ["Acquit", "Amputee", "Alliteration", "Altitude"], "answerIndex": 3, "answer": "Altitude"}, {"num": 44, "prompt": "One Who Does Good Work For Others Without Thought Of Personal Gain.", "options": ["Altruist", "Acoustics", "Addict", "Arsonist"], "answerIndex": 0, "answer": "Altruist"}, {"num": 45, "prompt": "The philosophy of putting another’s welfare above one’s own", "options": ["Anachronism", "Analgesia", "Annular", "Altruism"], "answerIndex": 3, "answer": "Altruism"}, {"num": 46, "prompt": "One Who Belongs To Different Country, Race Of Group", "options": ["Abuse", "Alien", "Annular", "Arsonphobia"], "answerIndex": 1, "answer": "Alien"}, {"num": 47, "prompt": "Allowance Fixed After Divorce To A Wife.", "options": ["Alimony", "Ambiguous", "Abuse", "Autobiography"], "answerIndex": 0, "answer": "Alimony"}, {"num": 48, "prompt": "Story In Which Ideas Are symbolised As People.", "options": ["Allegory", "Anarchist", "Acquit", "Apprentice"], "answerIndex": 0, "answer": "Allegory"}, {"num": 49, "prompt": "Commencement Of Adjacent Words With The Same Letter.", "options": ["Aviary", "Anemometer", "Alliteration", "Ablution"], "answerIndex": 2, "answer": "Alliteration"}, {"num": 50, "prompt": "A state of emotional or intellectual separation", "options": ["Anachronism", "Alienation", "Aerial", "Affluent"], "answerIndex": 1, "answer": "Alienation"}, {"num": 51, "prompt": "A former student of a school, college or university", "options": ["Alumnus", "Anniversary", "Anglophobe", "Ambidextrous"], "answerIndex": 0, "answer": "Alumnus"}, {"num": 52, "prompt": "Sandy Soil Deposited By Running Water", "options": ["Anaesthetic", "Asylum", "Alluvial", "Autobiography"], "answerIndex": 2, "answer": "Alluvial"}, {"num": 53, "prompt": "Instrument For Measuring Altitudes In Aircraft.", "options": ["Altimeter", "Accentuate", "Animosity", "Abattoir"], "answerIndex": 0, "answer": "Altimeter"}, {"num": 54, "prompt": "One who does something for pleasure rather than profession", "options": ["Archive", "Arboreal", "Amateur", "Alleviate"], "answerIndex": 2, "answer": "Amateur"}, {"num": 55, "prompt": "Able To Use Both Hands Well.", "options": ["Apprentice", "Aggressor", "Ambidextrous", "Abbreviation"], "answerIndex": 2, "answer": "Ambidextrous"}, {"num": 56, "prompt": "A Word Or Statement that Can Be Interpreted In Two Ways.", "options": ["Applaud", "Ambiguous", "Annuity", "Acoustics"], "answerIndex": 1, "answer": "Ambiguous"}, {"num": 57, "prompt": "A diplomatic representative of one country in another", "options": ["Advocate", "Anarchy", "Apathy", "Ambassador"], "answerIndex": 3, "answer": "Ambassador"}, {"num": 58, "prompt": "Partial Or Total Loss Of Memory", "options": ["Alleviate", "Alien", "Amputee", "Amnesia"], "answerIndex": 3, "answer": "Amnesia"}, {"num": 59, "prompt": "A General Pardon Of Political Offenders.", "options": ["Artist", "Amnesty", "Anthropologist", "Anarchy"], "answerIndex": 1, "answer": "Amnesty"}, {"num": 60, "prompt": "One not concerned with right or wrong", "options": ["Assassination", "Amoral", "Apostle", "Abbreviation"], "answerIndex": 1, "answer": "Amoral"}, {"num": 61, "prompt": "Animals Which Live Both On Land And In Water.", "options": ["Amphibian", "Amnesty", "Apartheid", "Annuity"], "answerIndex": 0, "answer": "Amphibian"}, {"num": 62, "prompt": "A person who has had one or more limbs removed", "options": ["Amputee", "Annihilate", "Anthropology", "Arbitrary"], "answerIndex": 0, "answer": "Amputee"}, {"num": 63, "prompt": "The Loss Of Ability To Feel Pain While Still Conscious.", "options": ["Anthropology", "Arbitrary", "Analgesia", "Auditor"], "answerIndex": 2, "answer": "Analgesia"}, {"num": 64, "prompt": "One Who Wishes To Destroy All Established Government's Law And Order", "options": ["Anarchist", "Anachronism", "Abbreviation", "Alien"], "answerIndex": 0, "answer": "Anarchist"}, {"num": 65, "prompt": "The Absence Of Government In A Country.", "options": ["Archaeologist", "Anarchy", "Annular", "Antiquarian"], "answerIndex": 1, "answer": "Anarchy"}, {"num": 66, "prompt": "Substance used in surgery to produce unconsciousness", "options": ["Accentuate", "Anaesthetic", "Archaeologist", "Anecdote"], "answerIndex": 1, "answer": "Anaesthetic"}, {"num": 67, "prompt": "Short Amusing Story About Some Real Person Or Event.", "options": ["Applaud", "Arboriculture", "Anecdote", "Acquit"], "answerIndex": 2, "answer": "Anecdote"}, {"num": 68, "prompt": "Deviation From Common Rule Or Standard Or What Is Normal.", "options": ["Aesthetic", "Anatomy", "Anomaly", "Autobiography"], "answerIndex": 2, "answer": "Anomaly"}, {"num": 69, "prompt": "That Which Appears To Be In The Wrong Period.", "options": ["Antidote", "Anachronism", "Antagonist", "Armistice"], "answerIndex": 1, "answer": "Anachronism"}, {"num": 70, "prompt": "An Admirer Of The English People, Language, Manners, or Way Of Life", "options": ["Altruism", "Apostle", "Anemometer", "Anglophile"], "answerIndex": 3, "answer": "Anglophile"}, {"num": 71, "prompt": "One Who Dislikes The English & England.अं ेजों तथा इं ड को नापसंद करने वाला", "options": ["Anemometer", "Anonymous", "Amateur", "Anglophobe"], "answerIndex": 3, "answer": "Anglophobe"}, {"num": 72, "prompt": "A strong dislike", "options": ["Archive", "Ascetic", "Ambidextrous", "Animosity"], "answerIndex": 3, "answer": "Animosity"}, {"num": 73, "prompt": "Destroy completely", "options": ["Anniversary", "Annihilate", "Adolescence", "Auditorium"], "answerIndex": 1, "answer": "Annihilate"}, {"num": 74, "prompt": "Yearly celebration of a date or an event", "options": ["Anniversary", "Alumnus", "Annul", "Amnesia"], "answerIndex": 0, "answer": "Anniversary"}, {"num": 75, "prompt": "A Book Or an art work Whose Author Is Not Known", "options": ["Abuse", "Analgesia", "Assertive", "Anonymous"], "answerIndex": 3, "answer": "Anonymous"}, {"num": 76, "prompt": "One That Opposes Other.", "options": ["Antagonist", "Armistice", "Aquatic", "Autocracy"], "answerIndex": 0, "answer": "Antagonist"}, {"num": 77, "prompt": "A Medicine To Cure The Effect Of Poison.", "options": ["Aerating", "Antidote", "Ambassador", "Artiste"], "answerIndex": 1, "answer": "Antidote"}, {"num": 78, "prompt": "Branch of Sciences Relating To The Bodily Structure Of Human, animals and other living organisms", "options": ["Aesthetic", "Anarchist", "Accomplice", "Anatomy"], "answerIndex": 3, "answer": "Anatomy"}, {"num": 79, "prompt": "Instrument Used For Measuring speed and force Of Winds.", "options": ["Aviary", "Anodyne", "Archive", "Anemometer"], "answerIndex": 3, "answer": "Anemometer"}, {"num": 80, "prompt": "Yearly Grant", "options": ["Annuity", "Assertive", "Agoraphobia", "Aristocrat"], "answerIndex": 0, "answer": "Annuity"}, {"num": 81, "prompt": "To declare invalid an official agreement, decision or result", "options": ["Annul", "Autopsy", "Astronomy", "Amputee"], "answerIndex": 0, "answer": "Annul"}, {"num": 82, "prompt": "Ring-Shaped", "options": ["Annular", "Anniversary", "Amphibian", "Anglophile"], "answerIndex": 0, "answer": "Annular"}, {"num": 83, "prompt": "Pain Reliever", "options": ["Aggressor", "Afforestation", "Amoral", "Anodyne"], "answerIndex": 3, "answer": "Anodyne"}, {"num": 84, "prompt": "Comment added to a text or Diagram", "options": ["Ambidextrous", "Aristocracy", "Act", "Annotation"], "answerIndex": 3, "answer": "Annotation"}, {"num": 85, "prompt": "Enemy", "options": ["Altimeter", "Arsonist", "Acrophobia", "Antagonist"], "answerIndex": 3, "answer": "Antagonist"}, {"num": 86, "prompt": "the study of human societies, cultures and their development", "options": ["Apostle", "Anthropology", "Assent", "Abdicate"], "answerIndex": 1, "answer": "Anthropology"}, {"num": 87, "prompt": "One Who Studies History Relating To The Development Of Man", "options": ["Arsonist", "Astronomy", "Anthropologist", "Ambassador"], "answerIndex": 2, "answer": "Anthropologist"}, {"num": 88, "prompt": "Strong dislikes between two persons", "options": ["Astronomy", "Abstruse", "Antipathy", "Aquatic"], "answerIndex": 2, "answer": "Antipathy"}, {"num": 89, "prompt": "That is used to treat bacterial infection", "options": ["Affidavit", "Antibiotics", "Ascetic", "Altitude"], "answerIndex": 1, "answer": "Antibiotics"}, {"num": 90, "prompt": "relating to or dealing in antiques or rare books", "options": ["Arboreal", "Affluent", "Adolescence", "Antiquarian"], "answerIndex": 3, "answer": "Antiquarian"}, {"num": 91, "prompt": "A policy that segregate people on the basis of race", "options": ["Anecdote", "Annotation", "Apartheid", "Apostle"], "answerIndex": 2, "answer": "Apartheid"}, {"num": 92, "prompt": "Lack of feeling or emotion", "options": ["Animosity", "Anthropologist", "Apostle", "Apathy"], "answerIndex": 3, "answer": "Apathy"}, {"num": 93, "prompt": "The Point In A Planet's Orbit That Is Farthest From The Sun.", "options": ["Abridge", "Aphelion", "Assassination", "Acronym"], "answerIndex": 1, "answer": "Aphelion"}, {"num": 94, "prompt": "place where bees are kept", "options": ["Apiary", "Anarchist", "Acoustics", "Abstruse"], "answerIndex": 0, "answer": "Apiary"}, {"num": 95, "prompt": "To show approval or praise by clapping", "options": ["Affidavit", "Applaud", "Assertive", "Amputee"], "answerIndex": 1, "answer": "Applaud"}, {"num": 96, "prompt": "A person who works for an employer in order to learn a particular skill needed in their job", "options": ["Apprentice", "Ascetic", "Applaud", "Anaesthetic"], "answerIndex": 0, "answer": "Apprentice"}, {"num": 97, "prompt": "Estimation of a thing’s worth", "options": ["Appraisal", "Aerating", "Annuity", "Alleviate"], "answerIndex": 0, "answer": "Appraisal"}, {"num": 98, "prompt": "Loss Of Ability To Understand Speech.", "options": ["Ad hoc", "Aphasia", "Arable", "Alumnus"], "answerIndex": 1, "answer": "Aphasia"}, {"num": 99, "prompt": "supporter of a particular policy, idea, or cause", "options": ["Aeronautics", "Acoustics", "Antibiotics", "Apostle"], "answerIndex": 3, "answer": "Apostle"}, {"num": 100, "prompt": "One Who Abandons His Religious Faith.", "options": ["Apostate", "Antipathy", "Autobiography", "Acquit"], "answerIndex": 0, "answer": "Apostate"}, {"num": 101, "prompt": "Animals Which Live In Water", "options": ["Arboriculture", "Aerating", "Aphelion", "Aquatic"], "answerIndex": 3, "answer": "Aquatic"}, {"num": 102, "prompt": "A tank where fish or water plants are kept", "options": ["Archaeologist", "Alien", "Aquarium", "Autopsy"], "answerIndex": 2, "answer": "Aquarium"}, {"num": 103, "prompt": "A land fit for growing crops", "options": ["Archaeologist", "Arable", "Ascetic", "Anachronism"], "answerIndex": 1, "answer": "Arable"}, {"num": 104, "prompt": "Based on random choice or personal whim", "options": ["Animosity", "Aristocrat", "Analgesia", "Arbitrary"], "answerIndex": 3, "answer": "Arbitrary"}, {"num": 105, "prompt": "an agreement made by opposing sides in a war to stop fighting for a certain time", "options": ["Armistice", "Abstruse", "Anthropologist", "Atheist"], "answerIndex": 0, "answer": "Armistice"}, {"num": 106, "prompt": "One who is appointed to settle a Dispute", "options": ["Ambidextrous", "Arbitrator", "Apartheid", "Anecdote"], "answerIndex": 1, "answer": "Arbitrator"}, {"num": 107, "prompt": "One who practises one of the fine arts", "options": ["Alliteration", "Avaricious", "Artist", "Ablution"], "answerIndex": 2, "answer": "Artist"}, {"num": 108, "prompt": "A Government By the nobles.", "options": ["Assertive", "Asylum", "Amputee", "Aristocracy"], "answerIndex": 3, "answer": "Aristocracy"}, {"num": 109, "prompt": "A person who deliberately sets fire to a building", "options": ["Antagonist", "Addendum", "Ambassador", "Arsonist"], "answerIndex": 3, "answer": "Arsonist"}, {"num": 110, "prompt": "A Professional Singer or Dancer Etc", "options": ["Anemometer", "Artiste", "Applaud", "Assertive"], "answerIndex": 1, "answer": "Artiste"}, {"num": 111, "prompt": "Living In Trees", "options": ["Arboreal", "Apartheid", "Arsenal", "Anglophile"], "answerIndex": 0, "answer": "Arboreal"}, {"num": 112, "prompt": "Cultivation Of Trees And Vegetables.", "options": ["Alienation", "Arboriculture", "Annul", "Aeronautics"], "answerIndex": 1, "answer": "Arboriculture"}, {"num": 113, "prompt": "the scientific study of prehistoric peoples and their cultures by analysis of their artifacts, inscriptions, monuments, etc", "options": ["Alienation", "Ambiguous", "Archaeologist", "Astrology"], "answerIndex": 2, "answer": "Archaeologist"}, {"num": 114, "prompt": "group of islands scattered in lakes, rivers, or the ocean", "options": ["Antagonist", "Advertisement", "Archipelago", "Alienation"], "answerIndex": 2, "answer": "Archipelago"}, {"num": 115, "prompt": "A Place For The Collection Of Historical Documents Or Records.", "options": ["Aborigines", "Archive", "Anatomy", "Affidavit"], "answerIndex": 1, "answer": "Archive"}, {"num": 116, "prompt": "The study of ancient civilization", "options": ["Asylum", "Affidavit", "Archaeology", "Anonymous"], "answerIndex": 2, "answer": "Archaeology"}, {"num": 117, "prompt": "A noble person", "options": ["Assent", "Aristocrat", "Assassination", "Archaeologist"], "answerIndex": 1, "answer": "Aristocrat"}, {"num": 118, "prompt": "A Place Where Weapons Are Manufactured And Stored", "options": ["Arsenal", "Aerial", "Assent", "Anarchy"], "answerIndex": 0, "answer": "Arsenal"}, {"num": 119, "prompt": "Fear of fire", "options": ["Abuse", "Arsonphobia", "Aggressor", "Acronym"], "answerIndex": 1, "answer": "Arsonphobia"}, {"num": 120, "prompt": "To Have Good Communication Skills", "options": ["Anarchist", "Adolescence", "Aeronautics", "Articulate"], "answerIndex": 3, "answer": "Articulate"}, {"num": 121, "prompt": "One Who Practices Self-Denial As A Spiritual Discipline", "options": ["Autopsy", "Archaeology", "Aphasia", "Ascetic"], "answerIndex": 3, "answer": "Ascetic"}, {"num": 122, "prompt": "Killing Or Murder For Political Reasons.", "options": ["Assassination", "Anemometer", "Advertisement", "Acrophobia"], "answerIndex": 0, "answer": "Assassination"}, {"num": 123, "prompt": "The Quality of being politely firm and demanding", "options": ["Assertive", "Agoraphobia", "Anomaly", "Addict"], "answerIndex": 0, "answer": "Assertive"}, {"num": 124, "prompt": "To agree to something", "options": ["Agoraphobia", "Abattoir", "Armistice", "Assent"], "answerIndex": 3, "answer": "Assent"}, {"num": 125, "prompt": "Science Of The Influence Of The Stars On Human Affairs", "options": ["Anonymous", "Abbot", "Astrology", "Amoral"], "answerIndex": 2, "answer": "Astrology"}, {"num": 126, "prompt": "Science Of The Universe With Sun, Moon, Stars, And Planets.", "options": ["Abuse", "Aristocrat", "Astronomy", "Amoral"], "answerIndex": 2, "answer": "Astronomy"}, {"num": 127, "prompt": "Place that provides refuge", "options": ["Amnesia", "Arsonist", "Asylum", "Aerial"], "answerIndex": 2, "answer": "Asylum"}, {"num": 128, "prompt": "A Person Who Does Not Believe In God.", "options": ["Abuse", "Acrophobia", "Atheist", "Altitude"], "answerIndex": 2, "answer": "Atheist"}, {"num": 129, "prompt": "A Government Where The Power Is In The Hands Of One Person.", "options": ["Archaeologist", "Aesthetic", "Autocracy", "Articulate"], "answerIndex": 2, "answer": "Autocracy"}, {"num": 130, "prompt": "An Assembly Of Listeners", "options": ["Autocracy", "Asylum", "Anglophile", "Audience"], "answerIndex": 3, "answer": "Audience"}, {"num": 131, "prompt": "The Life-History Of A Man Written By Himself", "options": ["Anodyne", "Anarchy", "Autobiography", "Arboreal"], "answerIndex": 2, "answer": "Autobiography"}, {"num": 132, "prompt": "One who makes an official examination of accounts", "options": ["Abhor", "Acoustics", "Auditor", "Anachronism"], "answerIndex": 2, "answer": "Auditor"}, {"num": 133, "prompt": "A building where an audience sits", "options": ["Arboriculture", "Alimony", "Animosity", "Auditorium"], "answerIndex": 3, "answer": "Auditorium"}, {"num": 134, "prompt": "One Who Is Greedy", "options": ["Armistice", "Antiquarian", "Avaricious", "Anthropology"], "answerIndex": 2, "answer": "Avaricious"}, {"num": 135, "prompt": "Medical Examination Of A Dead Body", "options": ["Alleviate", "Arbitrator", "Antagonist", "Autopsy"], "answerIndex": 3, "answer": "Autopsy"}, {"num": 136, "prompt": "The group, especially in the arts, regarded as being the most experimental", "options": ["Abbreviation", "Avant-garde", "Aristocrat", "Adulation"], "answerIndex": 1, "answer": "Avant-garde"}, {"num": 137, "prompt": "A place where birds are kept", "options": ["Aviary", "Arbitrary", "Auditor", "Aerial"], "answerIndex": 0, "answer": "Aviary"}];
+
+const state = {
+  current: 0,
+  answers: Array(questions.length).fill(null),
+  marked: Array(questions.length).fill(false),
+  submitted: false,
+  timer: 20 * 60,
+  interval: null
+};
+
+const el = (id) => document.getElementById(id);
+
+function renderPalette() {
+  const palette = el('palette');
+  palette.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'pbtn';
+    btn.textContent = q.num;
+    if (idx === state.current && !state.submitted) btn.classList.add('current');
+    if (!state.submitted) {
+      if (state.marked[idx]) btn.classList.add('marked');
+      else if (state.answers[idx] !== null) btn.classList.add('answered');
+    } else {
+      const selected = state.answers[idx];
+      const isCorrect = selected !== null && selected === q.answerIndex;
+      if (selected === null) btn.classList.add('unanswered');
+      else if (isCorrect) btn.classList.add('correct');
+      else btn.classList.add('wrong');
+    }
+    btn.addEventListener('click', () => {
+      state.current = idx;
+      render();
+    });
+    palette.appendChild(btn);
+  });
+}
+
+function renderQuestion() {
+  const q = questions[state.current];
+  el('qnoLabel').textContent = `QUESTION ${q.num} / ${questions.length}`;
+  el('progress').textContent = `QUESTION ${q.num} / ${questions.length}`;
+  el('questionText').textContent = `${q.num}. ${q.prompt}`;
+  el('markReview').checked = state.marked[state.current];
+
+  const wrap = el('options');
+  wrap.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const label = document.createElement('label');
+    label.className = 'option';
+    if (state.answers[state.current] === idx) label.classList.add('selected');
+    label.innerHTML = `
+      <input type="radio" name="opt" value="${idx}" ${state.answers[state.current] === idx ? 'checked' : ''} />
+      <span class="text">${opt}</span>
+    `;
+    label.querySelector('input').addEventListener('change', () => {
+      state.answers[state.current] = idx;
+      render();
+    });
+    wrap.appendChild(label);
+  });
+
+  el('prevBtn').disabled = state.current === 0;
+  el('nextBtn').textContent = state.current === questions.length - 1 ? 'Save' : 'Save & Next';
+  el('answeredCount').textContent = state.answers.filter(v => v !== null).length;
+  el('markedCount').textContent = state.marked.filter(Boolean).length;
+  el('markReview').onchange = (e) => {
+    state.marked[state.current] = e.target.checked;
+    renderPalette();
+    el('markedCount').textContent = state.marked.filter(Boolean).length;
+  };
+}
+
+function render() {
+  renderPalette();
+  if (!state.submitted) renderQuestion();
+}
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+function startTimer() {
+  el('timer').textContent = formatTime(state.timer);
+  state.interval = setInterval(() => {
+    if (state.submitted) return;
+    state.timer -= 1;
+    el('timer').textContent = formatTime(state.timer);
+    if (state.timer <= 0) {
+      clearInterval(state.interval);
+      submitTest(true);
+    }
+  }, 1000);
+}
+
+function submitTest(auto=false) {
+  if (state.submitted) return;
+  const msg = auto ? 'Time is up. Submitting the test now.' : 'Submit the test now?';
+  if (!auto && !confirm(msg)) return;
+
+  state.submitted = true;
+  clearInterval(state.interval);
+
+  let correct = 0, wrong = 0, unanswered = 0;
+  questions.forEach((q, idx) => {
+    const ans = state.answers[idx];
+    if (ans === null) unanswered++;
+    else if (ans === q.answerIndex) correct++;
+    else wrong++;
+  });
+  const score = correct * 1 - wrong * 0.5;
+
+  el('quizView').style.display = 'none';
+  el('resultView').style.display = 'block';
+
+  el('scoreVal').textContent = score.toFixed(1);
+  el('correctVal').textContent = correct;
+  el('wrongVal').textContent = wrong;
+  el('unansweredVal').textContent = unanswered;
+  const attempted = correct + wrong;
+  const acc = attempted ? ((correct / attempted) * 100).toFixed(1) : '0.0';
+  el('accuracyText').textContent = `Accuracy: ${acc}% · Attempted: ${attempted} / ${questions.length}`;
+
+  const review = el('reviewArea');
+  review.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const ans = state.answers[idx];
+    const status = ans === null ? 'unanswered' : (ans === q.answerIndex ? 'correct' : 'wrong');
+    const userText = ans === null ? 'Not answered' : q.options[ans];
+    const card = document.createElement('div');
+    card.className = `review-card ${status}`;
+    card.innerHTML = `
+      <div class="meta">Question ${q.num} · ${status.toUpperCase()}</div>
+      <div class="q">${q.num}. ${q.prompt}</div>
+      <div class="a"><strong>Correct answer:</strong> ${q.answer}<br><strong>Your answer:</strong> ${userText}</div>
+    `;
+    review.appendChild(card);
+  });
+
+  renderPalette();
+}
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.current > 0) {
+    state.current--;
+    render();
+  }
+});
+el('nextBtn').addEventListener('click', () => {
+  if (state.current < questions.length - 1) {
+    state.current++;
+    render();
+  }
+});
+el('clearBtn').addEventListener('click', () => {
+  state.answers[state.current] = null;
+  render();
+});
+el('submitBtn').addEventListener('click', () => submitTest(false));
+el('toggleReview').addEventListener('click', () => {
+  const area = el('reviewArea');
+  area.style.display = (area.style.display === 'none') ? 'block' : 'none';
+});
+
+render();
+startTimer();
+</script>
+</body>
+</html>
