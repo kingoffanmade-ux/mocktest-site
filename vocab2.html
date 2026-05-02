@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SSC CGL Mock Test - One Word Substitution</title>
+<style>
+  :root {
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --line: #dbe4f0;
+    --primary: #2563eb;
+    --primary-soft: #eff6ff;
+    --green: #16a34a;
+    --amber: #f59e0b;
+    --purple: #7c3aed;
+    --red: #ef4444;
+    --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 180px, var(--bg) 100%);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(219,228,240,0.9);
+  }
+  .topbar-inner {
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand { display: flex; flex-direction: column; gap: 4px; }
+  .brand h1 { margin: 0; font-size: 20px; line-height: 1.1; }
+  .brand .sub { color: var(--muted); font-size: 13px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+  .pill {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 14px;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.05);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .pill strong { color: var(--primary); }
+  .pill.timer { color: #b91c1c; }
+
+  .layout {
+    max-width: 1450px;
+    margin: 18px auto 30px;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 18px;
+    align-items: start;
+  }
+  .panel {
+    background: var(--card);
+    border: 1px solid rgba(219,228,240,0.92);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .main { padding: 22px; }
+  .qhead {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .qhead .qno {
+    color: var(--primary);
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    font-size: 15px;
+  }
+  .qhead .mark {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .question {
+    font-size: 28px;
+    line-height: 1.35;
+    margin: 10px 0 18px;
+    font-weight: 800;
+  }
+  .options { display: grid; gap: 12px; margin-top: 8px; }
+  .option {
+    border: 1.5px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: 0.16s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+  }
+  .option:hover {
+    transform: translateY(-1px);
+    border-color: #b8c8e6;
+    box-shadow: 0 8px 18px rgba(15,23,42,0.05);
+  }
+  .option input { transform: scale(1.15); }
+  .option .text { font-size: 18px; font-weight: 600; flex: 1; }
+  .option.selected { border-color: var(--primary); background: var(--primary-soft); }
+
+  .footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+  button {
+    border: 0;
+    border-radius: 14px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-secondary { background: #eef2ff; color: #1d4ed8; }
+  .btn-ghost { background: #f3f4f6; color: #111827; }
+
+  .sidebar {
+    padding: 16px;
+    position: sticky;
+    top: 86px;
+  }
+  .sidebar h2 { margin: 0 0 10px; font-size: 16px; }
+  .legend {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .legend-row { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .dot.unanswered { background: #e5e7eb; }
+  .dot.answered { background: var(--primary); }
+  .dot.marked { background: var(--amber); }
+  .dot.current { background: var(--purple); }
+
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    max-height: calc(100vh - 260px);
+    overflow: auto;
+    padding-right: 4px;
+  }
+  .pbtn {
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 0;
+    font-weight: 800;
+    cursor: pointer;
+    min-height: 42px;
+    transition: 0.15s ease;
+  }
+  .pbtn:hover { border-color: #93c5fd; }
+  .pbtn.current { background: #ede9fe; border-color: #a78bfa; color: #6d28d9; }
+  .pbtn.answered { background: #eff6ff; border-color: #93c5fd; color: #1d4ed8; }
+  .pbtn.marked { background: #fffbeb; border-color: #fbbf24; color: #a16207; }
+  .pbtn.correct { background: #ecfdf5; border-color: #86efac; color: #15803d; }
+  .pbtn.wrong { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+
+  .review { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 18px; display: none; }
+  .review-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-top: 12px;
+  }
+  .review-card.correct { border-left: 5px solid var(--green); }
+  .review-card.wrong { border-left: 5px solid var(--red); }
+  .review-card.unanswered { border-left: 5px solid #9ca3af; }
+  .review-card .meta { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .review-card .q { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+  .review-card .a { font-size: 14px; line-height: 1.5; }
+
+  .result-box { display: none; }
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .score-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 8px 20px rgba(15,23,42,0.04);
+  }
+  .score-card .label { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+  .score-card .value { font-size: 28px; font-weight: 900; }
+  .small { color: var(--muted); font-size: 13px; }
+  .review-toggle {
+    margin-top: 10px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  @media (max-width: 1100px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .score-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 700px) {
+    .topbar-inner { flex-direction: column; align-items: flex-start; }
+    .stats { justify-content: flex-start; }
+    .main { padding: 16px; }
+    .question { font-size: 22px; }
+    .option .text { font-size: 16px; }
+    .palette { grid-template-columns: repeat(6, 1fr); }
+    .score-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <h1>SSC CGL One Word Substitution Mock Test</h1>
+        <div class="sub">45 questions · +1 correct · -0.5 wrong · 20 minutes · answer review after submit</div>
+      </div>
+      <div class="stats">
+        <div class="pill"><strong id="progress">QUESTION 1 / 45</strong></div>
+        <div class="pill timer">TIME LEFT: <strong id="timer">20:00</strong></div>
+        <div class="pill">Answered: <strong id="answeredCount">0</strong></div>
+        <div class="pill">Marked: <strong id="markedCount">0</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="panel main">
+      <div id="quizView">
+        <div class="qhead">
+          <div class="qno" id="qnoLabel">QUESTION 1 / 45</div>
+          <div class="mark">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="markReview" />
+              Mark for review
+            </label>
+          </div>
+        </div>
+        <div class="question" id="questionText"></div>
+        <div class="options" id="options"></div>
+
+        <div class="footer-actions">
+          <div class="buttons">
+            <button class="btn-ghost" id="prevBtn" type="button">Previous</button>
+            <button class="btn-secondary" id="clearBtn" type="button">Clear Response</button>
+            <button class="btn-ghost" id="nextBtn" type="button">Save & Next</button>
+          </div>
+          <div class="buttons">
+            <button class="btn-primary" id="submitBtn" type="button">Submit Test</button>
+          </div>
+        </div>
+        <div class="small" style="margin-top:10px;">Use the palette on the right to jump between questions like a real exam.</div>
+      </div>
+
+      <div class="result-box" id="resultView">
+        <h2 style="margin:0 0 8px; font-size:28px;">Test Submitted</h2>
+        <div class="small">Your score and answer review are shown below.</div>
+        <div class="score-grid">
+          <div class="score-card"><div class="label">Score</div><div class="value" id="scoreVal">0</div></div>
+          <div class="score-card"><div class="label">Correct</div><div class="value" id="correctVal">0</div></div>
+          <div class="score-card"><div class="label">Wrong</div><div class="value" id="wrongVal">0</div></div>
+          <div class="score-card"><div class="label">Unanswered</div><div class="value" id="unansweredVal">0</div></div>
+        </div>
+        <div class="small" id="accuracyText"></div>
+        <div class="review-toggle" id="toggleReview">Show / hide answer review</div>
+        <div class="review" id="reviewArea"></div>
+      </div>
+    </div>
+
+    <div class="panel sidebar">
+      <h2>Question Palette</h2>
+      <div class="legend">
+        <div class="legend-row"><span class="dot current"></span> Current</div>
+        <div class="legend-row"><span class="dot answered"></span> Answered</div>
+        <div class="legend-row"><span class="dot marked"></span> Marked for review</div>
+        <div class="legend-row"><span class="dot unanswered"></span> Unanswered</div>
+      </div>
+      <div class="palette" id="palette"></div>
+    </div>
+  </div>
+
+<script>
+const questions = [
+  {num:1,prompt:"A man having no hair on scalp",options:["Bald","Bleak","Barren","Blank"],answerIndex:0,answer:"Bald"},
+  {num:2,prompt:"Poem narrating a popular story",options:["Ballad","Ballot","Balance","Ballast"],answerIndex:0,answer:"Ballad"},
+  {num:3,prompt:"A person who cannot pay his debts",options:["Bankrupt","Beggar","Borrower","Bystander"],answerIndex:0,answer:"Bankrupt"},
+  {num:4,prompt:"The state of being unmarried of a man",options:["Bachelorhood","Brotherhood","Boyhood","Barbarism"],answerIndex:0,answer:"Bachelorhood"},
+  {num:5,prompt:"Instrument to measure atmospheric pressure",options:["Barometer","Balance","Battery","Boiler"],answerIndex:0,answer:"Barometer"},
+  {num:6,prompt:"A part of the sea enclosed by a wide curve of shore",options:["Bay","Beach","Basin","Bank"],answerIndex:0,answer:"Bay"},
+  {num:7,prompt:"An uncivilised person",options:["Barbarian","Beggar","Bully","Bystander"],answerIndex:0,answer:"Barbarian"},
+  {num:8,prompt:"A place where soldiers live",options:["Barracks","Basement","Bungalow","Building"],answerIndex:0,answer:"Barracks"},
+  {num:9,prompt:"Anything that prevents passage",options:["Barricade","Barrier","Block","Bridge"],answerIndex:0,answer:"Barricade"},
+  {num:10,prompt:"A quarrelsome person",options:["Bellicose","Bold","Brutal","Bitter"],answerIndex:0,answer:"Bellicose"},
+  {num:11,prompt:"One engaged in fighting a war",options:["Belligerent","Brave","Bold","Boaster"],answerIndex:0,answer:"Belligerent"},
+  {num:12,prompt:"A stretch of sand along sea",options:["Beach","Bank","Basin","Bay"],answerIndex:0,answer:"Beach"},
+  {num:13,prompt:"To lose a relation by death",options:["Bereave","Break","Betray","Bury"],answerIndex:0,answer:"Bereave"},
+  {num:14,prompt:"A group of girls",options:["Bevy","Batch","Band","Board"],answerIndex:0,answer:"Bevy"},
+  {num:15,prompt:"One who gains benefit",options:["Beneficiary","Borrower","Broker","Beggar"],answerIndex:0,answer:"Beneficiary"},
+  {num:16,prompt:"One who gives financial help",options:["Benefactor","Builder","Buyer","Boss"],answerIndex:0,answer:"Benefactor"},
+  {num:17,prompt:"Happening twice a year",options:["Biannual","Bimonthly","Biennial","Binary"],answerIndex:0,answer:"Biannual"},
+  {num:18,prompt:"Material changed by bacteria",options:["Biodegradable","Biological","Biometric","Binary"],answerIndex:0,answer:"Biodegradable"},
+  {num:19,prompt:"A lover of books",options:["Bibliophile","Biologist","Bishop","Broker"],answerIndex:0,answer:"Bibliophile"},
+  {num:20,prompt:"One who speaks two languages",options:["Bilingual","Binary","Biased","Biannual"],answerIndex:0,answer:"Bilingual"},
+  {num:21,prompt:"The custom of having two wives",options:["Bigamy","Binary","Bilingual","Biology"],answerIndex:0,answer:"Bigamy"},
+  {num:22,prompt:"One who is narrow minded",options:["Bigot","Bitter","Bold","Brutal"],answerIndex:0,answer:"Bigot"},
+  {num:23,prompt:"A test of diseased tissues",options:["Biopsy","Autopsy","Surgery","Diagnosis"],answerIndex:0,answer:"Biopsy"},
+  {num:24,prompt:"Animal with two feet",options:["Biped","Quadruped","Tripod","Animal"],answerIndex:0,answer:"Biped"},
+  {num:25,prompt:"Speaking irreverently about God",options:["Blasphemy","Blessing","Belief","Betrayal"],answerIndex:0,answer:"Blasphemy"},
+  {num:26,prompt:"Perfect happiness",options:["Bliss","Bloom","Bright","Benefit"],answerIndex:0,answer:"Bliss"},
+  {num:27,prompt:"A spot caused by discoloration",options:["Blot","Block","Blur","Blemish"],answerIndex:0,answer:"Blot"},
+  {num:28,prompt:"A list of writings on a subject",options:["Bibliography","Biography","Autograph","Paragraph"],answerIndex:0,answer:"Bibliography"},
+  {num:29,prompt:"Briefness of time",options:["Brevity","Bravery","Brightness","Boredom"],answerIndex:0,answer:"Brevity"},
+  {num:30,prompt:"A thing likely to break easily",options:["Brittle","Broken","Bending","Bold"],answerIndex:0,answer:"Brittle"},
+  {num:31,prompt:"One who does not follow social norms",options:["Bohemian","Barbarian","Bystander","Beggar"],answerIndex:0,answer:"Bohemian"},
+  {num:32,prompt:"Rough and ill-mannered person",options:["Boarish","Brutal","Bold","Bitter"],answerIndex:0,answer:"Boarish"},
+  {num:33,prompt:"Science of plant life",options:["Botany","Biology","Zoology","Chemistry"],answerIndex:0,answer:"Botany"},
+  {num:34,prompt:"A situation that stops progress",options:["Bottleneck","Barrier","Block","Break"],answerIndex:0,answer:"Bottleneck"},
+  {num:35,prompt:"A small shop selling fashionable clothes",options:["Boutique","Bazaar","Booth","Bank"],answerIndex:0,answer:"Boutique"},
+  {num:36,prompt:"A broad road lined with trees",options:["Boulevard","Bridge","Broadway","Bypass"],answerIndex:0,answer:"Boulevard"},
+  {num:37,prompt:"Pertaining to cattle",options:["Bovine","Bird","Beast","Buffalo"],answerIndex:0,answer:"Bovine"},
+  {num:38,prompt:"A place where beer is made",options:["Brewery","Bakery","Factory","Mill"],answerIndex:0,answer:"Brewery"},
+  {num:39,prompt:"A woman with dark brown hair",options:["Brunette","Blonde","Beauty","Bold"],answerIndex:0,answer:"Brunette"},
+  {num:40,prompt:"A process to control spending",options:["Budgeting","Balancing","Borrowing","Banking"],answerIndex:0,answer:"Budgeting"},
+  {num:41,prompt:"Government run by civil servants",options:["Bureaucracy","Democracy","Monarchy","Republic"],answerIndex:0,answer:"Bureaucracy"},
+  {num:42,prompt:"A person who breaks into houses",options:["Burglar","Bandit","Thief","Robber"],answerIndex:0,answer:"Burglar"},
+  {num:43,prompt:"Hole made by an animal",options:["Burrow","Cave","Nest","Tunnel"],answerIndex:0,answer:"Burrow"},
+  {num:44,prompt:"One who is rough and cruel",options:["Brutal","Bold","Bitter","Bright"],answerIndex:0,answer:"Brutal"},
+  {num:45,prompt:"One who spends money wastefully",options:["Spendthrift","Benevolent","Benefactor","Borrower"],answerIndex:0,answer:"Spendthrift"}
+];
+
+const state = {
+  current: 0,
+  answers: Array(questions.length).fill(null),
+  marked: Array(questions.length).fill(false),
+  submitted: false,
+  timer: 20 * 60,
+  interval: null
+};
+
+const el = (id) => document.getElementById(id);
+
+function renderPalette() {
+  const palette = el('palette');
+  palette.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'pbtn';
+    btn.textContent = q.num;
+    if (idx === state.current && !state.submitted) btn.classList.add('current');
+    if (!state.submitted) {
+      if (state.marked[idx]) btn.classList.add('marked');
+      else if (state.answers[idx] !== null) btn.classList.add('answered');
+    } else {
+      const selected = state.answers[idx];
+      const isCorrect = selected !== null && selected === q.answerIndex;
+      if (selected === null) btn.classList.add('unanswered');
+      else if (isCorrect) btn.classList.add('correct');
+      else btn.classList.add('wrong');
+    }
+    btn.addEventListener('click', () => {
+      state.current = idx;
+      render();
+    });
+    palette.appendChild(btn);
+  });
+}
+
+function renderQuestion() {
+  const q = questions[state.current];
+  el('qnoLabel').textContent = `QUESTION ${q.num} / ${questions.length}`;
+  el('progress').textContent = `QUESTION ${q.num} / ${questions.length}`;
+  el('questionText').textContent = `${q.num}. ${q.prompt}`;
+  el('markReview').checked = state.marked[state.current];
+
+  const wrap = el('options');
+  wrap.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const label = document.createElement('label');
+    label.className = 'option';
+    if (state.answers[state.current] === idx) label.classList.add('selected');
+    label.innerHTML = `
+      <input type="radio" name="opt" value="${idx}" ${state.answers[state.current] === idx ? 'checked' : ''} />
+      <span class="text">${opt}</span>
+    `;
+    label.querySelector('input').addEventListener('change', () => {
+      state.answers[state.current] = idx;
+      state.marked[state.current] = false;
+      render();
+    });
+    wrap.appendChild(label);
+  });
+
+  el('prevBtn').disabled = state.current === 0;
+  el('nextBtn').textContent = state.current === questions.length - 1 ? 'Save' : 'Save & Next';
+  el('answeredCount').textContent = state.answers.filter(v => v !== null).length;
+  el('markedCount').textContent = state.marked.filter(Boolean).length;
+  el('markReview').onchange = (e) => {
+    state.marked[state.current] = e.target.checked;
+    renderPalette();
+    el('markedCount').textContent = state.marked.filter(Boolean).length;
+  };
+}
+
+function render() {
+  renderPalette();
+  if (!state.submitted) renderQuestion();
+}
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+function startTimer() {
+  el('timer').textContent = formatTime(state.timer);
+  state.interval = setInterval(() => {
+    if (state.submitted) return;
+    state.timer -= 1;
+    el('timer').textContent = formatTime(state.timer);
+    if (state.timer <= 0) {
+      clearInterval(state.interval);
+      submitTest(true);
+    }
+  }, 1000);
+}
+
+function submitTest(auto=false) {
+  if (state.submitted) return;
+  if (!auto && !confirm('Submit the test now?')) return;
+
+  state.submitted = true;
+  clearInterval(state.interval);
+
+  let correct = 0, wrong = 0, unanswered = 0;
+  questions.forEach((q, idx) => {
+    const ans = state.answers[idx];
+    if (ans === null) unanswered++;
+    else if (ans === q.answerIndex) correct++;
+    else wrong++;
+  });
+  const score = correct * 1 - wrong * 0.5;
+
+  el('quizView').style.display = 'none';
+  el('resultView').style.display = 'block';
+
+  el('scoreVal').textContent = score.toFixed(1);
+  el('correctVal').textContent = correct;
+  el('wrongVal').textContent = wrong;
+  el('unansweredVal').textContent = unanswered;
+  const attempted = correct + wrong;
+  const acc = attempted ? ((correct / attempted) * 100).toFixed(1) : '0.0';
+  el('accuracyText').textContent = `Accuracy: ${acc}% · Attempted: ${attempted} / ${questions.length}`;
+
+  const review = el('reviewArea');
+  review.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const ans = state.answers[idx];
+    const status = ans === null ? 'unanswered' : (ans === q.answerIndex ? 'correct' : 'wrong');
+    const userText = ans === null ? 'Not answered' : q.options[ans];
+    const card = document.createElement('div');
+    card.className = `review-card ${status}`;
+    card.innerHTML = `
+      <div class="meta">Question ${q.num} · ${status.toUpperCase()}</div>
+      <div class="q">${q.num}. ${q.prompt}</div>
+      <div class="a"><strong>Correct answer:</strong> ${q.answer}<br><strong>Your answer:</strong> ${userText}</div>
+    `;
+    review.appendChild(card);
+  });
+
+  renderPalette();
+}
+
+el('prevBtn').addEventListener('click', () => {
+  if (state.current > 0) {
+    state.current--;
+    render();
+  }
+});
+el('nextBtn').addEventListener('click', () => {
+  if (state.current < questions.length - 1) {
+    state.current++;
+    render();
+  }
+});
+el('clearBtn').addEventListener('click', () => {
+  state.answers[state.current] = null;
+  state.marked[state.current] = false;
+  render();
+});
+el('submitBtn').addEventListener('click', () => submitTest(false));
+el('toggleReview').addEventListener('click', () => {
+  const area = el('reviewArea');
+  area.style.display = (area.style.display === 'none' || !area.style.display) ? 'block' : 'none';
+});
+
+render();
+startTimer();
+</script>
+</body>
+</html>
